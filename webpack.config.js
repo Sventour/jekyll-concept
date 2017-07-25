@@ -1,6 +1,5 @@
 const Iris = require('iris');
 const path = require('path');
-var iris = Iris.paths;
 
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -8,12 +7,16 @@ const extractCSS = new ExtractTextPlugin('myStyle.css');
 
 module.exports = {
   // webpack folder’s entry js — excluded from jekll’s build process.
-  entry: './webpack/entry.js',
+  entry:{
+  	app: './webpack/entry.js',
+  	contact_us: './webpack/components/Form.js',
+  	about_us: './webpack/components/About_us.js'
+  }, 
   output: {
     // we’re going to put the generated file in the assets folder so jekyll will grab it.
     path: path.resolve(__dirname,'dist'),
     publicPath: '/dist',
-    filename: 'bundle.js'
+    filename: '[name].bundle.js'
   },
 
   module: {
@@ -23,7 +26,7 @@ module.exports = {
       use:[{
 		  loader: 'babel-loader', // ‘babel-loader’ is also a legal name to reference
 		  options: {
-			presets: ['react', 'es2015']
+			presets: ['react', 'es2015', 'stage-0']
 		  }
       }],
     },
@@ -56,14 +59,14 @@ module.exports = {
             }]
     },
     {
-		test: /\.svg/,
-		loader: 'svg-react'
+		test: /\.svg$/,
+		loader: 'babel-loader?presets[]=es2015,presets[]=react!svg-react-loader',
 	}
     ]
   },
   resolve: {
   	alias: Object.assign({}, Iris.paths),
-  	extensions: [".js", ".jsx",".scss"]
+  	extensions: [".js", ".jsx",".scss", ".svg"]
   },
   plugins: [
 //   	extractCSS

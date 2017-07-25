@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Button from 'iris/Button';
-// import Badge from 'iris/Badge';
+import {GridBlock, GridCol, Grid} from 'iris/Grid';
 import 'iris/GlobalCSS';
 
 export class Hello extends Component {
